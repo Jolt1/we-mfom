@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>Methodist Foundation of Mississippi</title>
-  <META http-equiv="refresh" content="600;URL=index.php">
+  <META http-equiv="refresh" content="6000;URL=index.php">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" type="text/javascript"></script>
   <script src="https://code.jquery.com/jquery-migrate-3.4.0.min.js"></script>
   <link href="inc/main.css?rel=<?=date('ymdhi')?>" rel="stylesheet" type="text/css">

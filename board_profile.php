@@ -8,27 +8,9 @@ error_reporting(E_ALL);
 foreach($_GET as $namex => $value){$$namex = mysql_prep($value);  }
 
  
-
-
-if(!isset($loc) && !isset($pid)){$loc = 3;
-                            $fp = qu("select *  from locations where  col = '{$loc}' limit 1");
-                            $fp = fas( $fp );
-                                $pid = $fp['id']; 
-                                 $pin = dbinfo('locations', $pid);
-}elseif(isset($pid)){
-    
-$pin = dbinfo('locations', $pid);
-$loc =    $pin['col']; 
-}elseif(isset($loc)){
-    
-  $fp = qu("select *  from locations where  col = '{$loc}' limit 1");
-                            $fp = fas( $fp );
-                             $pid = $fp['id'];   
-    $pin = dbinfo('locations', $pid);
-}
-
-
-     
+$loc = 3;
+$prf = dbinfo('donors', $p); 
+$pid =   $prf['loc'];   
 
 ?><!doctype html>
 <html><head>
@@ -46,12 +28,8 @@ $loc =    $pin['col'];
       
       $(document).ready(function() {
    
-     
-		$(".mscrollbar").mCustomScrollbar({
-						axis:"x",
-					theme:"light-3",
-					advanced:{autoExpandHorizontalScroll:true}
-				});  
+     $(".mscrollbar").mCustomScrollbar({ 	});  
+		 
 		
         });
       </script>
@@ -59,26 +37,62 @@ $loc =    $pin['col'];
   <link href="inc/main.css?rel=<?=date('ymdhi')?>" rel="stylesheet" type="text/css">
 </head>
 <body>
-<div id="main_out" style="background-image: url('inc/img/main_bg.jpg');"> 
-<div class="cont_top mscrollbar"> 
-<div class="board_card_holder  ">
-<?php 
-    $fbrd = qu("select *  from donors where loc = '{$pid}'");
-    while($br = fas($fbrd)) {    
+<div id="main_out" style="background-image: url('inc/img/main_bg.jpg')"> 
+<div class="cont_top  "> 
+ <div class="name_prof_list mscrollbar">
+<div>
+   <?php
+    $fbrd = qu("select *  from donors  where loc = '{$pid}'");
+        $allids = [];
+    while($br = fas($fbrd)) {  ?> 
+    <a href="board_profile.php?p=<?=$br['id']?>" <?php if($p == $br['id']){
+        echo 'class="activepg"';
+        
+    }?>> <?=$br['name']?> <?=$br['lname']?></a><br>
+    <?
+                            
+                            
+                            
+               $allids[] = $br['id'];             
+               $allbrd[$br['id']] = $br;             
+                            } 
+    
+    
+            
+      end($allids); // Move the internal pointer to the last element
+     $lastKey = key($allids);
+       
+      $curkey = array_search($p, $allids);       
+         
+          if( $curkey == 0 ){$prev = $allids[$lastKey];
+                             $next = $allids[1]; }
+            elseif($curkey == $lastKey){
+                
+                            $prev = $allids[($curkey-1)];
+                             $next = $allids[0];} else{
+                
+                $prev = $allids[($curkey-1)];
+                             $next = $allids[($curkey+1)];
+            }
+    
+    
     ?>
-<div class="board_card" onClick="window.location.href='board_profile.php?p=<?=$br['id']?>'">
-<div class="board_card_pic"></div>
-<p class="board_card_name">
- <?=$br['name']?> <?=$br['lname']?><br>
-<span  class="board_card_name_pos"><?=$br['position']?></span>
-    </p>    
-</div>    
- <? } ?>   
-    
+     
 </div>    
     
     
     
+</div> 
+    
+    
+<div class="name_prof_pic"></div>    
+<div class="name_prof_text">
+<h2><?=$prf['name']?> <?=$prf['lname']?> - <span style="font-weight: normal; font-size:30px;"><?=$prf['position']?></span></h2>    
+    <p><?=$prf['desc']?></p>
+    
+</div>
+    <div class="nxtbtn"> <a href="board_profile.php?p=<?=$next?>"><?=$allbrd[$next]['name']?> <?=$allbrd[$next]['lname']?> > </a> </div>
+    <br clear="all" >   
 </div>    
  <div class="cont_nav">
  
