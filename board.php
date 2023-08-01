@@ -67,7 +67,12 @@ $loc =    $pin['col'];
     while($br = fas($fbrd)) {    
     ?>
 <div class="board_card" onClick="window.location.href='board_profile.php?p=<?=$br['id']?>'">
-<div class="board_card_pic"></div>
+<div class="board_card_pic"><?php
+     
+    if(isset($br['img']) && $br['img'] != '' && file_exists("inc/donor_photos/".$br['img'])){
+        echo '<img src="inc/donor_photos/'.$br['img'].'" style="width:100%;">';
+    }
+    ?></div>
 <p class="board_card_name">
  <?=$br['name']?> <?=$br['lname']?><br>
 <span  class="board_card_name_pos"><?=$br['position']?></span>
@@ -88,8 +93,13 @@ $loc =    $pin['col'];
       >
 <?php
  $floc = qu("select *  from locations where  col = '{$loc}' ");    
- while($p = fas($floc)){ ?>
- <a href="board.php?pid=<?=$p['id']?>" class="nav_left <? 
+ while($p = fas($floc)){
+     
+     $link = 'board.php?pid='.$p['id'];
+     if($p['id'] == 9){ $link = 'board_profile.php?p=1';}
+     ?>
+     
+ <a href="<?=$link?>" class="nav_left <? 
      if($pid == $p['id']){echo 'navselected';}  ?> "
     style="   <?php
      if($p['lh'] != '' && $p['lh'] >0){  echo ' margin-top:0px;'; }else{

@@ -85,10 +85,16 @@ $pid =   $prf['loc'];
 </div> 
     
     
-<div class="name_prof_pic"></div>    
+<div class="name_prof_pic">
+<?php
+     
+    if(isset($prf['img']) && $prf['img'] != '' && file_exists("inc/donor_photos/".$prf['img'])){
+        echo '<img src="inc/donor_photos/'.$prf['img'].'" style="width:100%;">';
+    }
+    ?></div>    
 <div class="name_prof_text">
 <h2><?=$prf['name']?> <?=$prf['lname']?> - <span style="font-weight: normal; font-size:30px;"><?=$prf['position']?></span></h2>    
-    <p><?=$prf['desc']?></p>
+    <p><?=$prf['bio']?></p>
     
 </div>
     <div class="nxtbtn"> <a href="board_profile.php?p=<?=$next?>"><?=$allbrd[$next]['name']?> <?=$allbrd[$next]['lname']?> > </a> </div>
@@ -102,8 +108,11 @@ $pid =   $prf['loc'];
       >
 <?php
  $floc = qu("select *  from locations where  col = '{$loc}' ");    
- while($p = fas($floc)){ ?>
- <a href="board.php?pid=<?=$p['id']?>" class="nav_left <? 
+ while($p = fas($floc)){  $link = 'board.php?pid='.$p['id'];
+     if($p['id'] == 9){ $link = 'board_profile.php?p=1';}
+     ?>
+     
+ <a href="<?=$link?>" class="nav_left <? 
      if($pid == $p['id']){echo 'navselected';}  ?> "
     style="   <?php
      if($p['lh'] != '' && $p['lh'] >0){  echo ' margin-top:0px;'; }else{

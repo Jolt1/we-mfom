@@ -148,10 +148,12 @@ img.map, map area {
 }
 .name_prof_pic {
   float: left;
-  height: 600px;
+  height: auto;
+  max-height: 600px;
   width: 500px;
   border: 5px solid #af2128;
   background-color: #e2eff5;
+    padding: 0;
 }
 .name_prof_text {
   float: left;
