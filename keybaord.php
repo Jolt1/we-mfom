@@ -1,6 +1,6 @@
 <div id="keyboard" >
 <form action="" method="post" enctype="multipart/form-data" name="searchform" id="searchform">
-<input type="text" name="search_text" id="search_text" placeholder="enter first or last name..." class="inputbox" /> 
+<input name="search_text" type="text" class="inputbox" id="search_text" placeholder="enter first or last name..." autocomplete="off" /> 
 <br />
 
 <div style="line-height:65px; margin-top:20px;  ">
@@ -58,7 +58,7 @@ style=" display:inline-block;  transform: rotate(180deg);"
 		 var newval = $("#search_text").val();
 		 $("#shaddow").slideDown();  
 		$("#popupbox").html("");
-		
+		//alert('SEARCH');
 		 $.post('searchhere.php',{newval : newval}, function(ret){
 			$("#popupboxsearch").html(ret); 
 			 $("#popupboxsearch").css({
@@ -81,13 +81,16 @@ $("#popupbox").css({
 		 });
 		
 		 
-		// return false;
+		  return false;
 	 });
 	 
 	 function keyboardtoggle(){
-		  
+		  $("#shaddow").slideToggle();
 		 $('#keyboard').slideToggle();
-		 
+         
+		 if ($('#keyboard').is(':visible')) {
+     $("#search_text").focus();
+}
 	 }
 		function hide_add(){
 		$("#popupbox").html('');
@@ -129,7 +132,7 @@ $("#search_text").val(newval);
 $("body").attr('unselectable', 'on')
                  .css('user-select', 'none')
                  .on('selectstart', false);
-//$(document).on("contextmenu", function(event) { event.preventDefault(); });
+$(document).on("contextmenu", function(event) { event.preventDefault(); });
      
 function scalebody() {
 				var veiwwid = $(window).width() / 1920;
